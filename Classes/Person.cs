@@ -16,10 +16,11 @@ namespace beatSync.Classes
         string gender;
         string userID;
         string password;
-        bool isAdmin;
         string address;
         string number;
         string email;
+
+        public Person() {}
 
         public Person( string firstname, string middlename, string lastname, int age, DateTime birth, string gender, string userID, string password, bool isAdmin, string address, string number, string email )
         {
@@ -31,7 +32,6 @@ namespace beatSync.Classes
             Gender = gender;
             UserID = userID;
             Password = password;
-            IsAdmin = isAdmin;
             Address = address;
             Number = number;
             Email = email;
@@ -47,7 +47,6 @@ namespace beatSync.Classes
             Gender = person.Gender;
             UserID = person.UserID;
             Password = person.Password;
-            IsAdmin = person.IsAdmin;
             Address = person.Address;
             Number = person.Number;
             Email = person.Email;
@@ -124,18 +123,6 @@ namespace beatSync.Classes
             }
         }
 
-        public bool IsAdmin
-        {
-            get
-            {
-                return this.isAdmin;
-            }
-            set
-            {
-                this.isAdmin = value;
-            }
-        }
-
         public string UserID
         {
             get
@@ -196,10 +183,20 @@ namespace beatSync.Classes
             }
         }
 
-        public string clearFields()
+        public bool clearFields()
         {
-
-            return "";
+            FirstName = string.Empty; 
+            MiddleName = string.Empty;
+            LastName = string.Empty;
+            UserID = string.Empty;
+            Password = string.Empty;
+            Address = string.Empty;
+            Number = string.Empty;
+            Email = string.Empty;
+            DateBirth = DateTime.Today;
+            Age = -1;
+            Gender = string.Empty;
+            return true;
         }
     }
 }
