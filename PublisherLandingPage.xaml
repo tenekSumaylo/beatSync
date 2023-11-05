@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:y="clr-namespace:beatSync.ViewModels"
+             x:Class="beatSync.PublisherLandingPage"
+             x:DataType="y:PublisherLandingPageViewModel"
+             Title=""
+             Shell.NavBarIsVisible="False"
+             BackgroundImageSource="beatsync_landing.png"
+             xmlns:model="clr-namespace:beatSync.Models">
+    
+    <ContentPage.Resources>
+        <Style TargetType="Border" x:Key="photo">
+            <Setter Property="WidthRequest" Value="60"/>
+            <Setter Property="HeightRequest" Value="60"/>
+            <Setter Property="Stroke" Value="transparent"/>
+        </Style>
+        
+        <Style TargetType="Border" x:Key="photoPicture">
+            <Setter Property="WidthRequest" Value="120"/>
+            <Setter Property="HeightRequest" Value="120"/>
+            <Setter Property="Stroke" Value="transparent"/>
+        </Style>
+
+        <Style TargetType="Border" x:Key="icon">
+            <Setter Property="WidthRequest" Value="50"/>
+            <Setter Property="HeightRequest" Value="50"/>
+            <Setter Property="Stroke" Value="transparent"/>
+        </Style>
+
+        <Style TargetType="Border" x:Key="personPhoto">
+            <Setter Property="WidthRequest" Value="250"/>
+            <Setter Property="HeightRequest" Value="250"/>
+            <Setter Property="Stroke" Value="Transparent"/>
+        </Style>
+
+        <Style TargetType="Label">
+            <Setter Property="TextColor" Value="#A39797"/>
+        </Style>
+
+    </ContentPage.Resources>
+    <ScrollView>
+        <VerticalStackLayout Margin="50" Spacing="100">
+            <VerticalStackLayout>
+                <Grid RowDefinitions="100" ColumnDefinitions="340,*,340"  VerticalOptions="Center">
+                    <ImageButton Source="beatsync_publisher.png" Grid.Row="0" Grid.Column="0" HorizontalOptions="Start" BackgroundColor="Transparent" VerticalOptions="End"/>
+                    <HorizontalStackLayout HorizontalOptions="End" VerticalOptions="Center" Grid.Row="0" Grid.Column="2" Spacing="10" >
+                        <Label Text="Hello, AS Tech" VerticalOptions="Center"/>
+                        <Border Style="{StaticResource icon}" >
+                            <Image Source="beatsync_user.png" />
+                        </Border>
+                    </HorizontalStackLayout>
+                </Grid>
+                <Border StrokeThickness="2" Padding="15" StrokeShape="Rectangle 0,0,0,0" Stroke="Black">
+                    <HorizontalStackLayout HorizontalOptions="Center" Spacing="30" Grid.Column="1" Grid.Row="0" VerticalOptions="End">
+                        <Label Text="Account Overview"/>
+                        <Label Text="Management"/>
+                        <Label Text="Stream Statistics"/>
+                    </HorizontalStackLayout>
+                 </Border>
+            </VerticalStackLayout>
+            <Grid RowDefinitions="*" ColumnDefinitions="*" HorizontalOptions="Start" Margin="100, 0, 0, 0">
+                <VerticalStackLayout Grid.Row="0" Grid.Column="0" >
+                    <Label Text="{Binding MessageOutput}" TextColor="White" FontSize="30"/>
+                    <HorizontalStackLayout Spacing="60">
+                        <Image Source="monkeysample.png" Style="{StaticResource personPhoto}"/>
+                        <VerticalStackLayout Spacing="40">
+                            <Label Text="{Binding PersonP.FirstName}" TextColor="White" FontSize="30"/>
+                            <Label Text="{Binding PersonP.LastName}" TextColor="White" FontSize="50"/>
+                            <Border Style="{StaticResource icon}" HorizontalOptions="Start">
+                                <ImageButton Source="beatsync_addsong.png" Background="Transparent" HorizontalOptions="Start" Command="{Binding OnAddSong}"/>
+                            </Border>
+                        </VerticalStackLayout>
+                    </HorizontalStackLayout>
+                    <Border>
+                    </Border>
+                </VerticalStackLayout>
+            </Grid>
+
+            <VerticalStackLayout Margin="50,50,50,50" BackgroundColor="Grey">
+            <CollectionView ItemsSource="{Binding SongList}" HorizontalOptions="Start" Margin="400, 0, 0, 0">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="model:Song">
+                        <Grid ColumnDefinitions="*" HorizontalOptions="Start">
+                            <HorizontalStackLayout Spacing="30" >
+                                <Grid ColumnDefinitions="100">
+                                    <Image Source="{Binding DisplayPhoto}" Grid.Column="0"/>
+                                </Grid>
+                                <VerticalStackLayout Spacing="10" VerticalOptions="End">
+                                    <Label Text="{Binding SongName}" FontSize="28" TextColor="White"/>
+                                    <Label Text="{Binding Artist}" FontSize="18" TextColor="White"/>
+                                </VerticalStackLayout>
+                            </HorizontalStackLayout>
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </VerticalStackLayout>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

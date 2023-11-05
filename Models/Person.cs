@@ -1,54 +1,43 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace beatSync.Classes
+namespace beatSync.Models
 {
-    internal class Person
+    public class Person : BaseModel
     {
         string firstName;
-        string middleName;
         string lastName;
-        int age;
-        DateTime dateBirth;
-        string gender;
+        string dateBirth;
         string userID;
         string password;
         string address;
-        string number;
         string email;
 
         public Person() {}
 
-        public Person( string firstname, string middlename, string lastname, int age, DateTime birth, string gender, string userID, string password, bool isAdmin, string address, string number, string email )
+        public Person( string firstname, string middlename, string lastname, string age, string birth, string userID, string password, bool isAdmin, string address, string number, string email )
         {
             FirstName = firstname;
-            MiddleName = middlename;
             LastName = lastname;
-            Age = age;
             DateBirth = birth;
-            Gender = gender;
             UserID = userID;
             Password = password;
             Address = address;
-            Number = number;
             Email = email;
         }
 
         public Person( Person person )
         {
             FirstName = person.FirstName;
-            MiddleName = person.MiddleName; 
             LastName = person.LastName;
-            Age = person.Age;
             DateBirth = person.DateBirth;
-            Gender = person.Gender;
             UserID = person.UserID;
             Password = person.Password;
             Address = person.Address;
-            Number = person.Number;
             Email = person.Email;
         }
 
@@ -61,19 +50,10 @@ namespace beatSync.Classes
             set
             {
                 this.firstName = value;
+                OnPropertyChanged(nameof(FirstName));
             }
         }
 
-        public string MiddleName
-        {
-            get
-            {
-                return this.middleName;
-            }
-            set {
-                this.middleName = value;
-            }
-        }
 
         public string LastName
         {
@@ -84,22 +64,11 @@ namespace beatSync.Classes
             set
             {
                 this.lastName = value;
+                OnPropertyChanged(nameof(LastName));    
             }
         }
 
-        public int Age
-        {
-            get
-            {
-                return this.age;
-            }
-            set
-            {
-                this.age = value;
-            }
-        }
-
-        public DateTime DateBirth
+        public string DateBirth
         {
             get
             {
@@ -108,18 +77,7 @@ namespace beatSync.Classes
             set
             {
                 this.dateBirth = value;
-            }
-        }
-
-        public string Gender
-        {
-            get
-            {
-                return this.gender;
-            }
-            set
-            {
-                this.gender = value;
+                OnPropertyChanged(nameof(DateBirth));
             }
         }
 
@@ -132,6 +90,7 @@ namespace beatSync.Classes
             set
             {
                 this.userID = value; 
+                OnPropertyChanged(nameof(UserID));
             }
         }
 
@@ -144,6 +103,7 @@ namespace beatSync.Classes
             set
             {
                 this.password = value;
+                OnPropertyChanged(nameof(Password));
             }
         }
 
@@ -156,20 +116,10 @@ namespace beatSync.Classes
             set
             {
                 this.address = value;
+                OnPropertyChanged(nameof(Address));
             }
         }
 
-        public string Number
-        {
-            get
-            {
-                return this.number;
-            }
-            set
-            {
-                this.number = value;
-            }
-        }
 
         public string Email
         {
@@ -180,23 +130,21 @@ namespace beatSync.Classes
             set
             {
                 this.email = value;
+                OnPropertyChanged(nameof(Email));
             }
         }
 
-        public bool clearFields()
+        public bool ClearFields()
         {
             FirstName = string.Empty; 
-            MiddleName = string.Empty;
             LastName = string.Empty;
             UserID = string.Empty;
             Password = string.Empty;
             Address = string.Empty;
-            Number = string.Empty;
             Email = string.Empty;
-            DateBirth = DateTime.Today;
-            Age = -1;
-            Gender = string.Empty;
+            DateBirth = string.Empty;
             return true;
         }
+        
     }
 }

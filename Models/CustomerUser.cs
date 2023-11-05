@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace beatSync.Classes
+namespace beatSync.Models
 {
-    internal class CustomerUser : Person
+    public class CustomerUser : Person
     {
         private int userType;
         private Song songPlayed;

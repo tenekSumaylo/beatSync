@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="beatSync.CreateAccount"
+             xmlns:y="clr-namespace:beatSync.ViewModels"
+             x:DataType="y:CreateAccountViewModel"
+             Title=""
+             Shell.NavBarIsVisible="False"
+             BackgroundImageSource="beatsync_background.png">
+    <ContentPage.Resources>
+        <Style TargetType="Label">
+            <Setter Property="TextColor" Value="White"/>
+        </Style>
+
+        <Style TargetType="Entry">
+            <Setter Property="TextColor" Value="White"/>
+            <Setter Property="BackgroundColor" Value="#5C5474"/>
+            <Setter Property="WidthRequest" Value="200"/>
+        </Style>
+    </ContentPage.Resources>
+    <ScrollView>
+        <VerticalStackLayout HorizontalOptions="Center"
+                        VerticalOptions="Start" Margin="100">
+            <HorizontalStackLayout HorizontalOptions="Center"
+                          Spacing="30"
+                          VerticalOptions="Start"
+                          Margin="10,10,10,10">
+                <Grid ColumnDefinitions="100, 200"
+             RowDefinitions="50, 50, 50, 50, 50, 50"
+             VerticalOptions="Start"
+             HorizontalOptions="Start"
+             RowSpacing="10"
+             Margin="25"
+             >
+                    <Label Grid.Column="0"
+                        Grid.Row="0"
+                        Text="USER-ID"
+                        VerticalTextAlignment="Center"
+                        FontSize="15"/>
+                    <Border Grid.Column="1" Grid.Row="0">
+                        <Entry MaxLength="9"
+                              ToolTipProperties.Text="Required. Numeric Characters only"
+                              Text="{Binding PublisherPerson.UserID}"
+                               IsReadOnly="True">
+                        </Entry>
+                    </Border>
+
+                    <Label Grid.Column="0"
+                  Grid.Row="1"
+                  Text="First Name"
+                  VerticalTextAlignment="Center"/>
+                    <Border Grid.Column="1"
+                           Grid.Row="1">
+                        <Entry ToolTipProperties.Text="Required"
+                              Text="{Binding PublisherPerson.FirstName}">
+                            <!--#region -->
+                        </Entry>
+                    </Border>
+
+                    <Label Grid.Column="0"
+                  Grid.Row="2"
+                  Text="Last Name"
+                  VerticalTextAlignment="Center"/>
+                    <Border Grid.Column="1"
+                           Grid.Row="2">
+                        <Entry ToolTipProperties.Text="Required"
+                              Text="{Binding PublisherPerson.LastName}"/>
+                    </Border>
+
+                    <Label Grid.Column="0"
+                  Grid.Row="3"
+                  Text="E-mail"
+                  VerticalTextAlignment="Center"/>
+                    <Border Grid.Column="1"
+                           Grid.Row="3">
+                        <Entry ToolTipProperties.Text="Required" Text="{Binding PublisherPerson.Email}"/>
+                    </Border>
+
+                    <Label Grid.Column="0"
+                  Grid.Row="4"
+                  Text="Password"
+                  VerticalTextAlignment="Center"/>
+                    <Border Grid.Column="1"
+                           Grid.Row="4">
+                        <Entry ToolTipProperties.Text="Required. Minimum of 8 characters"
+                              IsPassword="True"
+                              Text="{Binding PublisherPerson.Password}"/>
+                    </Border>
+                    <Label Grid.Column="0"
+                  Grid.Row="5"
+                  Text="Confirm Password"
+                  VerticalTextAlignment="Center"/>
+                    <Border Grid.Column="1"
+                           Grid.Row="5">
+                        <Entry ToolTipProperties.Text="Input should match"
+                              Text="{Binding ConfirmPass}"
+                              IsPassword="True"/>
+                    </Border>
+                </Grid>
+
+                <Grid ColumnDefinitions="100, 200"
+             RowDefinitions="50, 50, 50"
+             VerticalOptions="Start"
+             HorizontalOptions="Start"
+             RowSpacing="10"
+             Margin="25"
+             >
+                    <Label Grid.Column="0"
+                  Grid.Row="0"
+                  Text="Birth Date"
+                  VerticalTextAlignment="Center"/>
+                    <Border Grid.Column="1"
+                           Grid.Row="0">
+                        <Entry ToolTipProperties.Text="Optional"
+                              Text="{Binding PublisherPerson.DateBirth}">
+                            <!--#region -->
+                        </Entry>
+                    </Border>
+
+                    <Label Grid.Column="0"
+                  Grid.Row="1"
+                  Text="Address"
+                  VerticalTextAlignment="Center"/>
+                    <Border Grid.Column="1"
+                           Grid.Row="1">
+                        <Entry ToolTipProperties.Text="Required"
+                              Text="{Binding PublisherPerson.Address}"/>
+                    </Border>
+                </Grid>
+
+            </HorizontalStackLayout>
+            <HorizontalStackLayout HorizontalOptions="Center"
+                                  Spacing="25">
+                <Button MinimumWidthRequest="80"
+                       Text="Submit"
+                       Command="{Binding OnSubmit}"/>
+                <Button MinimumWidthRequest="80"
+                       Text="Back"
+                       Command="{Binding OnBack}"
+                       />
+            </HorizontalStackLayout>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="beatSync.AddSong"
+             Title=""
+             Shell.NavBarIsVisible="False"
+             BackgroundImageSource="beatsync_landing.png">
+
+    <ContentPage.Resources>
+        <Style TargetType="Label">
+            <Setter Property="TextColor" Value="White"/>
+        </Style>
+        <Style TargetType="Entry">
+            <Setter Property="TextColor" Value="White"/>
+            <Setter Property="BackgroundColor" Value="#5C5474"/>
+            <Setter Property="WidthRequest" Value="200"/>
+        </Style>
+
+        <Style TargetType="Border" x:Key="photoPicture">
+            <Setter Property="WidthRequest" Value="130"/>
+            <Setter Property="HeightRequest" Value="120"/>
+            <Setter Property="Stroke" Value="transparent"/>
+        </Style>
+    </ContentPage.Resources>
+    <ScrollView>
+    <VerticalStackLayout HorizontalOptions="Center" Padding="0,80" Spacing="20">
+        <Border Stroke="Black" Style="{StaticResource photoPicture}">
+            <Image x:Name="imagePlace"/>
+        </Border>
+            <VerticalStackLayout>
+                <Label Text="Song Name" HorizontalOptions="Center"/>
+                <Entry Text="" x:Name="txtSongName"/>
+            </VerticalStackLayout>
+            <VerticalStackLayout>
+                <Label Text="Genre" HorizontalOptions="Center"/>
+            <Entry Text="" x:Name="txtSongGenre"/>
+        </VerticalStackLayout>
+        <VerticalStackLayout>
+                <Label Text="Artist" HorizontalOptions="Center"/>
+            <Entry Text="" x:Name="txtSongArtist"/>
+        </VerticalStackLayout>
+        <Button Text="Add Image Here" WidthRequest="190" Clicked="OnAddImage"/>
+        <Button Text="Add Song" WidthRequest="150" Clicked="AddNewSongToArtist"/>
+            <Label Text="" x:Name="fullpath"/>
+            <Label Text="" x:Name="filename"/>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

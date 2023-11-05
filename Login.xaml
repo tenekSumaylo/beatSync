@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="beatSync.Login"
+             xmlns:y="clr-namespace:beatSync.ViewModels"
+             x:DataType="y:LoginViewModel"
+             Title=""
+             Shell.NavBarIsVisible="False"
+             BackgroundImageSource="beatsync_background.png">
+
+    <ContentPage.Resources>
+        <Style TargetType="Label">
+            <Setter Property="TextColor" Value="White"/>
+        </Style>
+        <Style TargetType="Border">
+            <Setter Property="Stroke" Value="Transparent"/>
+            <Setter Property="WidthRequest" Value="300"/>
+            <Setter Property="HeightRequest" Value="200"/>
+        </Style>
+
+        <Style TargetType="Entry">
+            <Setter Property="WidthRequest" Value="200"/>
+            <Setter Property="TextColor" Value="White"/>
+            <Setter Property="BackgroundColor" Value="#5C5474"/>
+        </Style>
+    </ContentPage.Resources>
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="15">
+            <Border>
+                <Image Source="beatsync_signin.png"/>
+            </Border>
+            <HorizontalStackLayout HorizontalOptions="Center">
+            <VerticalStackLayout Spacing="10">
+                <Label Text="Email or Username"/>
+                <Entry Text="{Binding UserID}"/>
+                      <Label Text="Password"/>
+                    <Entry IsPassword="True" Text="{Binding Password}"/>
+                    <Button CornerRadius="20" WidthRequest="120" Text="Login" BackgroundColor="#9747FF" Command="{Binding OnLoginButton}"/>
+                </VerticalStackLayout>
+            </HorizontalStackLayout>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

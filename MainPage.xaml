@@ -1,40 +1,28 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="beatSync.MainPage">
+             x:Class="beatSync.MainPage"
+             BackgroundImageSource="beatsync_background.png"
+             Title=""
+             xmlns:y ="clr-namespace:beatSync.ViewModels"
+             x:DataType="y:MainPageViewModel"
+             Shell.NavBarIsVisible="False">
+
+    <ContentPage.Resources>
+        <Style TargetType="Border">
+            <Setter Property="Stroke" Value="Transparent"/>
+            <Setter Property="WidthRequest" Value="300"/>
+            <Setter Property="HeightRequest" Value="200"/>
+        </Style>
+    </ContentPage.Resources>
 
     <ScrollView>
-        <VerticalStackLayout
-            Spacing="25"
-            Padding="30,0"
-            VerticalOptions="Center">
-
-            <Image
-                Source="dotnet_bot.png"
-                SemanticProperties.Description="Cute dot net bot waving hi to you!"
-                HeightRequest="200"
-                HorizontalOptions="Center" />
-
-            <Label
-                Text="Hello, World!"
-                SemanticProperties.HeadingLevel="Level1"
-                FontSize="32"
-                HorizontalOptions="Center" />
-
-            <Label
-                Text="Welcome to .NET Multi-platform App UI"
-                SemanticProperties.HeadingLevel="Level2"
-                SemanticProperties.Description="Welcome to dot net Multi platform App U I"
-                FontSize="18"
-                HorizontalOptions="Center" />
-
-            <Button
-                x:Name="CounterBtn"
-                Text="Click me"
-                SemanticProperties.Hint="Counts the number of times you click"
-                Clicked="OnCounterClicked"
-                HorizontalOptions="Center" />
-
+        <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Start" Spacing="10" Margin="100">
+            <Border>
+                <Image Source="beatsync_publisher.png"/>
+            </Border>
+            <Button BackgroundColor="#453D62" WidthRequest="150" Text="Create Account" Command="{Binding OnNavigateCreate}"/>
+            <Button BackgroundColor="#453D62" WidthRequest="150" Text="Log in" Command="{Binding OnNavigateLogin}"/>
         </VerticalStackLayout>
     </ScrollView>
 

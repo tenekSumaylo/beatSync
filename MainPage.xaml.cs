@@ -1,24 +1,20 @@
-﻿namespace beatSync
+﻿using beatSync.Services;
+using beatSync.ViewModels;
+
+namespace beatSync
 {
     public partial class MainPage : ContentPage
     {
-        int count = 0;
+        public MainPageViewModel ViewModel { get; set; }
+        public PublisherService PubService { get; set; }
 
         public MainPage()
         {
             InitializeComponent();
+            ViewModel = new MainPageViewModel();
+            BindingContext = ViewModel;
+            PubService = new PublisherService();
         }
 
-        private void OnCounterClicked(object sender, EventArgs e)
-        {
-            count++;
-
-            if (count == 1)
-                CounterBtn.Text = $"Clicked {count} time";
-            else
-                CounterBtn.Text = $"Clicked {count} times";
-
-            SemanticScreenReader.Announce(CounterBtn.Text);
-        }
     }
 }
