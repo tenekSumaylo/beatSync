@@ -27,27 +27,7 @@ public partial class AddSong : ContentPage
 		}
 	}
 
-    private async void OnAddImage(object sender, EventArgs e)
-    {
-		var result = await FilePicker.PickAsync(new PickOptions
-		{
-			PickerTitle = "Pick Image Here",
-			FileTypes = FilePickerFileType.Images
-		});
-
-		if ( result == null )
-		{
-			return;
-		}
-
-		var imageStream = await result.OpenReadAsync();
-		imagePlace.Source = ImageSource.FromStream(() => imageStream);
-		fileP = result.FullPath;
-		fileNameX = result.FileName;
-
-    }
-
-	private async void AddNewSongToArtist( object sender, EventArgs e )
+    private async void AddNewSongToArtist( object sender, EventArgs e )
 	{
 		if ( ValidateForm() )
 		{
@@ -55,7 +35,7 @@ public partial class AddSong : ContentPage
 			Song newSong = new Song();
 			newSong.Artist = txtSongArtist.Text;
 			newSong.SongName = txtSongName.Text;
-			newSong.DatePublished = DateTime.Now.ToString();
+			newSong.DatePublished = DateTime.Now;
 			newSong.Genre = txtSongGenre.Text;
 			newSong.DisplayPhoto = SongPictureDir + $"/{UserID}/" + fileNameX;
 			addServiceS.WriteData(newSong, UserID);

@@ -12,10 +12,30 @@ namespace beatSync.Models
         private string songName;
         private string genre;
         private string displayPhoto;
-        private string artist;
-        private string datePublished;
-        private string songStreams;
+        private string artistID;
+        private DateTime datePublished;
+        private int songStreams;
         private float songDuration;
+        private string language;
+
+        public string Language
+        {
+            get => this.language;
+            set
+            {
+                this.language = value;
+                OnPropertyChanged(nameof(Language));
+            }
+        }
+        public int SongStreams
+        {
+            get => this.songStreams;
+            set
+            {
+                this.songStreams = value;
+                OnPropertyChanged(nameof(SongStreams));
+            }
+        }
 
         public string SongID
         {
@@ -37,7 +57,7 @@ namespace beatSync.Models
             }
         }
 
-        public string DatePublished
+        public DateTime DatePublished
         {
             get => datePublished;
             set
@@ -65,13 +85,13 @@ namespace beatSync.Models
             }
         }
 
-        public string Artist
+        public string ArtistID  
         {
-            get => artist;
+            get => this.artistID;
             set
             {
-                artist = value;
-                OnPropertyChanged(nameof(Artist));
+                artistID = value;
+                OnPropertyChanged(nameof(ArtistID));
             }
         }
 
@@ -91,14 +111,14 @@ namespace beatSync.Models
         public void ClearAllFields()
         {
             SongName = string.Empty;
-            Artist = string.Empty;
+            ArtistID = string.Empty;
             Genre = string.Empty;
-            DatePublished = string.Empty;
+            DatePublished = DateTime.Now;
             DisplayPhoto = string.Empty;
             SongID = string.Empty;
             SongDuration = 0;
+            Language = string.Empty;
+            SongStreams = 0;
         }
-
-
     }
 }

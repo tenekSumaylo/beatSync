@@ -44,7 +44,7 @@ namespace beatSync.ViewModels
             {
                 userID = value;
                 OnPropertyChanged(nameof(UserID));
-                SongList = songServicer.GetData(UserID);
+                SongList = songServicer.GetSpecificSongArtist(UserID);
                 PersonP = publisherService.ReturnUser(userID);
                 if ( !songServicer.ListCheckOfSongs( UserID ))
                 {

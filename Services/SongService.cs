@@ -13,6 +13,7 @@ namespace beatSync.Services
     {
         private ObservableCollection<Song> songAdd;
         string FilePathDir = FileSystem.Current.AppDataDirectory + @"/SONGLIST";
+        string SongFile = FileSystem.Current.AppDataDirectory + @"/SONGLIST/Songs.txt";
         string SongPictureDir = FileSystem.Current.AppDataDirectory + @"/SONGPICTURES";
 
         public SongService() {
@@ -31,40 +32,40 @@ namespace beatSync.Services
         {
             if (!Directory.Exists(FilePathDir + $"{ID}" ))
             {
-                Directory.CreateDirectory(FilePathDir + $"/{ID}");
-                Directory.CreateDirectory(SongPictureDir + $"/{ID}");
-                File.Create(FilePathDir + $"/{ID}/SongsList.txt");
+                Directory.CreateDirectory( FilePathDir );
+                Directory.CreateDirectory( SongPictureDir );
+                File.Create( SongFile );
             }
         }
 
-        public void WriteData(Song adder, string ID)
+        public void WriteData(Song newSong, string ID)
         {
 
-            if (adder != null)
+            if ( newSong != null )
             {
-                GetData( ID );
-                SongAdd.Add(adder);
+                songAdd = GetData();
+                SongAdd.Add( newSong );
                 var saveToFile = string.Empty;
-                saveToFile = JsonSerializer.Serialize(SongAdd);
-                File.WriteAllText(FilePathDir + $"/{ID}/SongsList.txt", saveToFile);
+                saveToFile = JsonSerializer.Serialize( SongAdd );
+                File.WriteAllText( SongFile, saveToFile );
             }
         }
 
-        public ObservableCollection<Song> GetData( string ID )
+        public ObservableCollection<Song> GetData()
         {
-            var k = new FileInfo(FilePathDir + $"/{ID}/SongsList.txt");
+            var k = new FileInfo( SongFile );
             if (k.Length == 0)
             {
                 return new ObservableCollection<Song>();
             }
-            string json = File.ReadAllText(FilePathDir + $"/{ID}/SongsList.txt");
+            string json = File.ReadAllText( SongFile );
             SongAdd = JsonSerializer.Deserialize<ObservableCollection<Song>>(json);
             return SongAdd;
         }
 
         public bool ListCheckOfSongs( string ID )
         {
-            var k = new FileInfo(FilePathDir + $"/{ID}/SongsList.txt");
+            var k = new FileInfo( SongFile );
             if (k.Length == 0)
                 return false;
             return true;
@@ -72,8 +73,25 @@ namespace beatSync.Services
 
         public void CopyPicture( string sourcePath, string fileName, string ID )
         {
-            File.Copy(sourcePath, SongPictureDir + $"/{ID}/{fileName}");
+            File.Copy( sourcePath, SongPictureDir );
         }
+
+        public ObservableCollection<Song> GetSpecificSongArtist( string ID )
+        {
+            ObservableCollection<Song> allSongs = GetData();
+            ObservableCollection<Song> songsOfArtist = new ObservableCollection<Song> ();
+
+            foreach ( Song artistSong in  allSongs )
+            {
+                if ( artistSong.SongID.IndexOf( ID ) != -1 )
+                {
+                    songsOfArtist.Add( artistSong );
+                }
+            }
+            return songsOfArtist;
+        }
+
+
     }
 
 }
