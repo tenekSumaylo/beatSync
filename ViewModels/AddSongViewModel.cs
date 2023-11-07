@@ -65,12 +65,12 @@ namespace beatSync.ViewModels
         {
             if (string.IsNullOrEmpty( ToBeAdded.SongID ) || string.IsNullOrEmpty( ToBeAdded.SongName ) || string.IsNullOrEmpty( ToBeAdded.Genre ) || string.IsNullOrEmpty( ToBeAdded.DisplayPhoto ) || string.IsNullOrEmpty( ToBeAdded.ArtistID ) || string.IsNullOrEmpty( ToBeAdded.DatePublished.ToString()) || string.IsNullOrEmpty( ToBeAdded.Language ))
             {
-                _ = DisplayAlert("ERROR", "PLEASE ENTER ALL FIELDS", "CLOSE");
+                _= DisplayAlert("ERROR", "PLEASE ENTER ALL FIELDS", "CLOSE");
                 return false;
             }
             else
             {
-                _ = DisplayAlert("SUCCESS", "SUCCESSFULLY ADDED SONG", "CLOSE");
+                _= DisplayAlert("SUCCESS", "SUCCESSFULLY ADDED SONG", "CLOSE");
                 return true;
             }
         }
