@@ -1,6 +1,6 @@
-﻿using HomeKit;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,14 +9,24 @@ using System.Threading.Tasks;
 //Used as Publisher/Artist
 namespace beatSync.Models
 {
-    public class PublisherBeat : CustomerUser
+    public class PublisherBeat : Person
     {
-        private List<string> albumID;
+        private ObservableCollection<Album> albumID;
         private string description;
+        int userType;
         public PublisherBeat() {}
 
+        public int UserType
+        {
+            get => this.userType;
+            set
+            {
+                this.userType = value;
+                OnPropertyChanged(nameof(UserType));
+            }
+        }
 
-        public List<string> AlbumID
+        public ObservableCollection<Album> AlbumID
         {
             get => this.albumID;
             set

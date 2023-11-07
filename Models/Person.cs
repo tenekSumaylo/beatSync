@@ -16,7 +16,6 @@ namespace beatSync.Models
         string password;
         string address;
         string email;
-
         public Person() {}
 
         public Person( string firstname, string middlename, string lastname, string age, string birth, string userID, string password, bool isAdmin, string address, string number, string email )

@@ -16,10 +16,29 @@ namespace beatSync.ViewModels
         private string confirmPass;
         public ICommand OnSubmit => new Command( ValidateForm );
         public ICommand OnBack => new Command( ReturnToMain );
+        public PublisherService publisherService;
+        public List<string> pickerItems { get; set; }
+        private int selectedUser;
         public CreateAccountViewModel() { 
             PublisherPerson = new PublisherBeat();
+            publisherService = new PublisherService();
+            pickerItems = UserTypesSelect();
         }
+
+        public List<string> UserTypesSelect() => new List<string> { "--SELECT--" ,"Publisher", "Admin" };
         
+        public int SelectedUser
+        {
+            get => this.selectedUser;
+            set
+            {
+                selectedUser = value;
+                PublisherPerson.UserID = publisherService.GenerateID( value );
+                PublisherPerson.UserType = value;
+                OnPropertyChanged(nameof( selectedUser ) );
+            }
+        }
+
         public string ConfirmPass
         {
             get => confirmPass;
@@ -41,7 +60,7 @@ namespace beatSync.ViewModels
             }
             else
             {
-                PublisherService publisherService = new PublisherService();
+        //        PublisherService publisherService = new PublisherService();
                 publisherService.WriteData( PublisherPerson );
                 _ = Shell.Current.DisplayAlert("SUCCESS", "SUCCESSFUL REGISTRATION", "CLOSE");
         //        SongService serviceK = new SongService();

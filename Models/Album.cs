@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 namespace beatSync.Models { 
     public class Album : BaseModel
     {
-        private List<Song> songs = new List<Song>();
+        private ObservableCollection<Song> songs = new ObservableCollection<Song>();
         private string albumTitle;
         private string albumArtist;
         private DateTime releaseDate;
@@ -106,7 +107,7 @@ namespace beatSync.Models {
             }
         }
 
-        public List<Song> Songs { get { return songs; } 
+        public ObservableCollection<Song> Songs { get { return songs; } 
             set
             {
                 this.songs = value;

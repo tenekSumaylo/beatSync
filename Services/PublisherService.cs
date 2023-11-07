@@ -98,8 +98,19 @@ namespace beatSync.Services
         
         public string GenerateID( int userType )
         {
+            var generateID = new FileInfo( filePathSaves );
+            int count = 0;
+            if ( generateID.Length != 0 )
+            {
+                GetData();
+                count = PublisherPeople.Count;
+            }
 
-            return "";
+            if (userType == 0)
+                return "NONE SELECTED";
+            else if (userType == 1)
+                return $"publisher-{count+1}";
+            return $"artist-{count+1}";
         }
 
     }

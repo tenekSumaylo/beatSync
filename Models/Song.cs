@@ -17,6 +17,17 @@ namespace beatSync.Models
         private int songStreams;
         private float songDuration;
         private string language;
+        private string artist;
+
+        public string Artist
+        {
+            get => this.artist;
+            set
+            {
+                this.artist = value;
+                OnPropertyChanged(nameof(Artist));
+            }
+        }
 
         public string Language
         {

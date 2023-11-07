@@ -39,7 +39,7 @@
                 <Label Text="Artist" HorizontalOptions="Center"/>
             <Entry Text="" x:Name="txtSongArtist"/>
         </VerticalStackLayout>
-        <Button Text="Add Image Here" WidthRequest="190" Command="AddImage"/>
+        <Button Text="Add Image Here" WidthRequest="190" Command="{Binding AddImage}"/>
         <Button Text="Add Song" WidthRequest="150" Clicked="AddNewSongToArtist"/>
             <Label Text="" x:Name="fullpath"/>
             <Label Text="" x:Name="filename"/>
