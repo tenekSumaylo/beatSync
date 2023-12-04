@@ -10,7 +10,7 @@ using beatSync.Services;
 using CommunityToolkit.Maui.Views;
 namespace beatSync.ViewModels
 {
-    [QueryProperty(nameof(UserID), nameof(UserID))]
+    [QueryProperty(nameof(DataStore), "DataStore")]
     public class PublisherLandingPageViewModel : BaseViewModel 
     {
         public ICommand OnAddSong => new Command( AddNewSong );
@@ -20,10 +20,11 @@ namespace beatSync.ViewModels
         private SongService songServicer;
         private PublisherService publisherService;
         private string messageOutput;
+        private PassingService dataStore;
         public PublisherLandingPageViewModel()
         {
             personP = new PublisherBeat();
-            songServicer = new SongService(); 
+            //songServicer = new SongService(); 
             publisherService = new PublisherService();
         }
 
@@ -37,24 +38,36 @@ namespace beatSync.ViewModels
             }
         }
 
+        public PassingService DataStore
+        {
+            get => this.dataStore;
+            set
+            {
+                this.dataStore = value;
+                OnPropertyChanged(nameof(DataStore));
+                MessageOutput = this.dataStore.UserID;
+            }
+        }
+
         public string UserID
         {
             get => userID;
             set
             {
+                MessageOutput = DataStore.UserInfo.UserID;
                 userID = value;
                 OnPropertyChanged(nameof(UserID));
-                SongList = songServicer.GetSpecificSongArtist(UserID);
+                //SongList = songServicer.GetSpecificSongArtist(UserID);
                 PersonP = publisherService.ReturnUser(userID);
-                if ( !songServicer.ListCheckOfSongs( UserID ))
-                {
-                    MessageOutput = "No songs added...";
+           //     if ( !songServicer.ListCheckOfSongs( UserID ))
+          //      {
+           //         MessageOutput = "No songs added...";
+           //     }
+         //       else
+          //      {
+          //          MessageOutput = "";
                 }
-                else
-                {
-                    MessageOutput = "";
-                }
-            }
+         //   }
         }
 
         public PublisherBeat PersonP
@@ -79,7 +92,10 @@ namespace beatSync.ViewModels
 
         public async void AddNewSong()
         {
-            await Shell.Current.GoToAsync($"{nameof(AddSong)}?UserID={UserID}");
+            await Shell.Current.GoToAsync(nameof(AddSong), true, new Dictionary<string, object>
+            {
+                { "DataStore", DataStore }
+            });
         }
     }
 }

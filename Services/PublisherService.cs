@@ -7,6 +7,7 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using beatSync.Models;
 using Microsoft.Maui.Layouts;
+using Microsoft.UI.Xaml;
 
 namespace beatSync.Services
 {
@@ -32,10 +33,18 @@ namespace beatSync.Services
         }
 
 
-        public void WriteData( PublisherBeat pub )
+        public void WriteData( PublisherBeat pub, int userType )
         {
             if ( pub != null )
             {
+                if ( userType == 1 )
+                {
+                   filePathSaves = FileSystem.Current.AppDataDirectory + @"/PUBLISHERSERA/Publishers.txt";
+                }
+                else
+                {
+                    filePathSaves = FileSystem.Current.AppDataDirectory + @"/PUBLISHERSERA/Artist.txt";
+                }
                 GetData();
                 publisherPeople.Add( pub );
                 var saveToFile = string.Empty;
@@ -60,12 +69,17 @@ namespace beatSync.Services
             if ( !Directory.Exists( filePathDir ) )
             {
                 Directory.CreateDirectory( filePathDir );
-                File.Create( filePathSaves );
+                File.Create( FileSystem.Current.AppDataDirectory + @"/PUBLISHERSERA/Publishers.txt" );
+                File.Create(FileSystem.Current.AppDataDirectory + @"/PUBLISHERSERA/Artist.txt");
             }
         }
 
-        public bool CheckUser( string ID, string pass)
+        public bool CheckUser(string ID, string pass, int userCheck)
         {
+            if ( userCheck == 2 )
+            {
+                filePathSaves = FileSystem.Current.AppDataDirectory +  @"/PUBLISHERSERA/Artist.txt";
+            }
             var k = new FileInfo(filePathSaves);
             GetData();
             if (k.Length == 0)
@@ -98,6 +112,13 @@ namespace beatSync.Services
         
         public string GenerateID( int userType )
         {
+            if (userType == 1)
+            {
+                filePathSaves = FileSystem.Current.AppDataDirectory + @"/PUBLISHERSERA/Publishers.txt";
+            }
+            else if ( userType == 2 ){
+                filePathSaves = FileSystem.Current.AppDataDirectory + @"/PUBLISHERSERA/Artist.txt";
+             }
             var generateID = new FileInfo( filePathSaves );
             int count = 0;
             if ( generateID.Length != 0 )
@@ -112,6 +133,24 @@ namespace beatSync.Services
                 return $"publisher-{count+1}";
             return $"artist-{count+1}";
         }
+        
+        public void UpdateInfo( PublisherBeat updated )
+        {
+            if ( updated.UserType == 2 )
+            {
+                filePathSaves = FileSystem.Current.AppDataDirectory + @"/PUBLISHERSERA/Artist.txt";
+            }
+            else
+            {
+                filePathSaves = FileSystem.Current.AppDataDirectory + @"/PUBLISHERSERA/Publishers.txt";
+            }
 
+            GetData();
+            PublisherPeople.RemoveAt( updated.PersonIndex );
+            PublisherPeople.Insert( updated.PersonIndex, updated );
+            var saveToFile = string.Empty;
+            saveToFile = JsonSerializer.Serialize(PublisherPeople);
+            File.WriteAllText(filePathSaves, saveToFile);
+        } 
     }
 }

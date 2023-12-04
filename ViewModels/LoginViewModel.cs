@@ -13,6 +13,22 @@ namespace beatSync.ViewModels
         public ICommand OnLoginButton => new Command(LoginUser);
         private string _username;
         private string _password;
+        private PassingService dataStore;
+        
+        public LoginViewModel()
+        {
+            DataStore = new PassingService();
+        }
+
+        public PassingService DataStore
+        {
+            get => this.dataStore;
+            set
+            {
+                this.dataStore = value;
+                OnPropertyChanged( nameof(DataStore) );
+            }
+        }
 
         public string UserID
         {
@@ -39,7 +55,10 @@ namespace beatSync.ViewModels
             if ( CheckUser() )
             {
                 _= Shell.Current.DisplayAlert("Success", "Login Successful", "Close");
-                await Shell.Current.GoToAsync($"{nameof(PublisherLandingPage)}?UserID={UserID}");
+                await Shell.Current.GoToAsync(nameof(PublisherLandingPage), true, new Dictionary<string, object>
+                {
+                    { "DataStore", DataStore }
+                });
             }
             else
             {
@@ -50,6 +69,7 @@ namespace beatSync.ViewModels
         private bool CheckUser()
         {
             PublisherService pubService = new PublisherService();
+            int indicateUser = 1;
 
             if ( string.IsNullOrEmpty( UserID) || string.IsNullOrEmpty( Password ) )
             {
@@ -57,8 +77,17 @@ namespace beatSync.ViewModels
             } 
             else
             {
-                if ( pubService.CheckUser( UserID, Password) )
+                if ( UserID.IndexOf( "artist" ) != -1 )
                 {
+                    indicateUser = 2;
+                }
+
+                if ( pubService.CheckUser( UserID, Password, indicateUser )  )
+                {
+                    pubService.GetData();
+                    DataStore.Persons = pubService.PublisherPeople;
+                    DataStore.UserID = UserID;
+                    DataStore.GetUser();
                     return true;
                 }
                 else

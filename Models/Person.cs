@@ -11,14 +11,18 @@ namespace beatSync.Models
     {
         string firstName;
         string lastName;
-        string dateBirth;
+        DateTime dateBirth;
         string userID;
         string password;
         string address;
         string email;
-        public Person() {}
+        int age;
+        int personIndex;
+        public Person() {
+            DateBirth = DateTime.Now;
+        }
 
-        public Person( string firstname, string middlename, string lastname, string age, string birth, string userID, string password, bool isAdmin, string address, string number, string email )
+        public Person( string firstname, string middlename, string lastname, int age, DateTime birth, string password, string address, string email )
         {
             FirstName = firstname;
             LastName = lastname;
@@ -27,6 +31,7 @@ namespace beatSync.Models
             Password = password;
             Address = address;
             Email = email;
+            Age = age;
         }
 
         public Person( Person person )
@@ -38,8 +43,28 @@ namespace beatSync.Models
             Password = person.Password;
             Address = person.Address;
             Email = person.Email;
+            Age = person.Age;
         }
 
+        public int PersonIndex
+        {
+            get => this.personIndex;
+            set
+            {
+                this.personIndex = value;
+                OnPropertyChanged(nameof(PersonIndex));
+            }
+        }
+
+        public int Age
+        {
+            get => this.age;
+            set
+            {
+                this.age = value;
+                OnPropertyChanged(nameof(Age));
+            }
+        }
         public string FirstName
         {
             get
@@ -67,7 +92,7 @@ namespace beatSync.Models
             }
         }
 
-        public string DateBirth
+        public DateTime DateBirth
         {
             get
             {
@@ -141,7 +166,7 @@ namespace beatSync.Models
             Password = string.Empty;
             Address = string.Empty;
             Email = string.Empty;
-            DateBirth = string.Empty;
+            DateBirth = DateTime.Now;
             return true;
         }
         

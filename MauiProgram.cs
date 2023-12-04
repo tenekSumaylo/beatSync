@@ -1,5 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
 using CommunityToolkit.Maui;
+using beatSync.ViewModels;
+
 
 namespace beatSync
 {
@@ -9,8 +11,8 @@ namespace beatSync
         {
             var builder = MauiApp.CreateBuilder();
             builder
-                .UseMauiApp<App>()
                 .UseMauiCommunityToolkit()
+                .UseMauiApp<App>()
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
@@ -20,6 +22,20 @@ namespace beatSync
 #if DEBUG
 		builder.Logging.AddDebug();
 #endif
+            builder.Services.AddTransientPopup<CreateAccount, CreateAccountViewModel>();
+
+            builder.Services.AddTransient<Login>();
+            builder.Services.AddTransient<LoginViewModel>();
+
+            builder.Services.AddTransient<CreateAccount>();
+            builder.Services.AddTransient<CreateAccountViewModel>();
+
+            builder.Services.AddTransient<PublisherLandingPage>();
+            builder.Services.AddTransient<PublisherLandingPageViewModel>();
+
+            builder.Services.AddTransient<AddSong>();
+            builder.Services.AddTransient<AddSongViewModel>();
+
 
             return builder.Build();
         }

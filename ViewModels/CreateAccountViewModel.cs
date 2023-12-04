@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using beatSync.Models;
 using beatSync.Services;
+using CommunityToolkit.Maui;
+using CommunityToolkit.Maui.Core;
 
 namespace beatSync.ViewModels
 {
@@ -14,18 +16,19 @@ namespace beatSync.ViewModels
     {
         public PublisherBeat PublisherPerson { get; set; }
         private string confirmPass;
-        public ICommand OnSubmit => new Command( ValidateForm );
-        public ICommand OnBack => new Command( ReturnToMain );
+        public ICommand OnClear => new Command( Clear );
         public PublisherService publisherService;
         public List<string> pickerItems { get; set; }
         private int selectedUser;
-        public CreateAccountViewModel() { 
+        private readonly IPopupService popupService;
+        public CreateAccountViewModel() {
+            popupService = new PopupService();
             PublisherPerson = new PublisherBeat();
             publisherService = new PublisherService();
             pickerItems = UserTypesSelect();
         }
 
-        public List<string> UserTypesSelect() => new List<string> { "--SELECT--" ,"Publisher", "Admin" };
+        public List<string> UserTypesSelect() => new List<string> { "--SELECT--" ,"Publisher", "Artist", "Customer" };
         
         public int SelectedUser
         {
@@ -49,26 +52,55 @@ namespace beatSync.ViewModels
             }
         }
 
-        public void ValidateForm()
+        public bool ValidateForm()
         {
-            if ( string.IsNullOrEmpty( PublisherPerson.UserID ) || string.IsNullOrEmpty( PublisherPerson.FirstName) || string.IsNullOrEmpty( PublisherPerson.LastName) || string.IsNullOrEmpty( PublisherPerson.Password ) || string.IsNullOrEmpty( PublisherPerson.Address ) || string.IsNullOrEmpty( PublisherPerson.Email) || string.IsNullOrEmpty( PublisherPerson.DateBirth) ) {
-                _ = Shell.Current.DisplayAlert("Error", "No inputs should be empty", "Close");
+            int flag = 1;
+            PublisherPerson.Age = getAccurateAge(PublisherPerson.DateBirth);
+            PublisherPerson.PersonIndex = GetIDNumber( PublisherPerson.UserID );
+            --PublisherPerson.PersonIndex;
+
+
+            if ( string.IsNullOrEmpty( PublisherPerson.UserID ) || string.IsNullOrEmpty( PublisherPerson.FirstName) || string.IsNullOrEmpty( PublisherPerson.LastName) || string.IsNullOrEmpty( PublisherPerson.Password ) || string.IsNullOrEmpty( PublisherPerson.Address ) || string.IsNullOrEmpty( PublisherPerson.Email) ) {
+                _ = Shell.Current.DisplayAlert("Error", $"No inputs should be empty ", "Close");
+                flag = 0;
             }
-            else if ( PublisherPerson.Password != ConfirmPass )
+
+            if ( !EmailCheck( PublisherPerson.Email ) )
+            {
+                _ = Shell.Current.DisplayAlert("INVALID EMAIL", "SHOULD BE A PROPER EMAIL", "CLOSE");
+                flag = 0;
+            }
+
+            if ( PublisherPerson.Age < 15 )
+            {
+                _ = Shell.Current.DisplayAlert("NOT ALLOWED", "You should be older than 15", "Close");
+                flag = 0;
+            }
+
+            if ( PublisherPerson.Password != ConfirmPass )
             {
                 _ = Shell.Current.DisplayAlert("Error", "PASSWORD SHOULD MATCH", "CLOSE");
+                flag = 0;
+            }
+
+            if ( flag == 1 )
+            {
+        //        PublisherService publisherService = new PublisherService();
+                publisherService.WriteData( PublisherPerson, SelectedUser );
+                _ = Shell.Current.DisplayAlert("SUCCESS", "SUCCESSFUL REGISTRATION", "CLOSE");
+                //        SongService serviceK = new SongService();
+                //        serviceK.CheckExisting(PublisherPerson.UserID);
+                return true;
             }
             else
             {
-        //        PublisherService publisherService = new PublisherService();
-                publisherService.WriteData( PublisherPerson );
-                _ = Shell.Current.DisplayAlert("SUCCESS", "SUCCESSFUL REGISTRATION", "CLOSE");
-        //        SongService serviceK = new SongService();
-        //        serviceK.CheckExisting(PublisherPerson.UserID);
-                ReturnToMain();
+                return false;
             }
         }
 
-        public async void ReturnToMain() { await Shell.Current.GoToAsync(".."); }
+        public async void Clear() {
+            await Task.Run( () => PublisherPerson.ClearFields() );
+            SelectedUser = 0;
+        }
     }
 }

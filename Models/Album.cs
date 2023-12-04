@@ -15,37 +15,7 @@ namespace beatSync.Models {
         private int albumStream;
         private string albumCover;
         private string albumDescription;
-        private string language;
-        private string artistID;
-        private List<string> songID;
 
-        public List<string> SongID
-        {
-            get => this.songID;
-            set
-            {
-                this.songID = value;
-                OnPropertyChanged(nameof(SongID));
-            }
-        }
-        public string ArtistID
-        {
-            get => this.artistID;
-            set
-            {
-                this.artistID = value;
-                OnPropertyChanged(nameof(ArtistID));    
-            }
-        }
-        public string Language
-        {
-            get => this.language;
-            set
-            {
-                this.language = value;
-                OnPropertyChanged(nameof(this.language));
-            }
-        }
 
         public string AlbumDescription
         {

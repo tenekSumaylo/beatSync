@@ -14,7 +14,9 @@ namespace beatSync.Models
         private ObservableCollection<Album> albumID;
         private string description;
         int userType;
-        public PublisherBeat() {}
+        public PublisherBeat() {
+            AlbumID = new ObservableCollection<Album>();
+        }
 
         public int UserType
         {
@@ -45,5 +47,10 @@ namespace beatSync.Models
                 OnPropertyChanged(nameof(Description));
             }
         }
+
+        public void addAlbum( Album album )
+        {
+            AlbumID.Add( album );
+        } 
     }
 }

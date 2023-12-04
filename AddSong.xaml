@@ -4,16 +4,18 @@
              x:Class="beatSync.AddSong"
              Title=""
              Shell.NavBarIsVisible="False"
-             BackgroundImageSource="beatsync_landing.png">
-
+             xmlns:viewModels="clr-namespace:beatSync.ViewModels"
+             xmlns:models="clr-namespace:beatSync.Models"
+             x:DataType="viewModels:AddSongViewModel">
     <ContentPage.Resources>
         <Style TargetType="Label">
             <Setter Property="TextColor" Value="White"/>
+            <Setter Property="WidthRequest" Value="68"/>
         </Style>
         <Style TargetType="Entry">
             <Setter Property="TextColor" Value="White"/>
             <Setter Property="BackgroundColor" Value="#5C5474"/>
-            <Setter Property="WidthRequest" Value="200"/>
+            <Setter Property="WidthRequest" Value="170"/>
         </Style>
 
         <Style TargetType="Border" x:Key="photoPicture">
@@ -22,27 +24,90 @@
             <Setter Property="Stroke" Value="transparent"/>
         </Style>
     </ContentPage.Resources>
-    <ScrollView>
-    <VerticalStackLayout HorizontalOptions="Center" Padding="0,80" Spacing="20">
-        <Border Stroke="Black" Style="{StaticResource photoPicture}">
-            <Image x:Name="imagePlace"/>
+
+    <Grid>
+        <Image Source="beatsync_landing.png" Aspect="AspectFill"/>
+        <Border Stroke="Transparent"  Margin="60,25,0,0" WidthRequest="350" HeightRequest="100" VerticalOptions="Start" HorizontalOptions="Start">
+            <Image Source="beatsync_publisher.png" Aspect="AspectFit"/>
         </Border>
-            <VerticalStackLayout>
-                <Label Text="Song Name" HorizontalOptions="Center"/>
-                <Entry Text="" x:Name="txtSongName"/>
+        <Grid BackgroundColor="#525252" ColumnDefinitions="250,250,250, *" RowDefinitions="180,*" Margin="90,150,90,65" Opacity="0.6" RowSpacing="10" Padding="20,5">
+            <VerticalStackLayout Grid.Row="0" Grid.Column="0" HorizontalOptions="Center" VerticalOptions="End" >
+                <Button WidthRequest="100" CornerRadius="15" Text="Add Song" Background="#5C5474" Command="{Binding OnValidateForm}"/>
+                <Picker SelectedIndex="{Binding SelectionOfPublish}" ItemsSource="{Binding TypeOfPublish}"  BackgroundColor="#5C5474" WidthRequest="100"/>
+                <Button WidthRequest="100" CornerRadius="15" Text="Add Photo" Background="#5C5474" Command="{Binding AddImage}"/>
             </VerticalStackLayout>
-            <VerticalStackLayout>
-                <Label Text="Genre" HorizontalOptions="Center"/>
-            <Entry Text="" x:Name="txtSongGenre"/>
-        </VerticalStackLayout>
-        <VerticalStackLayout>
-                <Label Text="Artist" HorizontalOptions="Center"/>
-            <Entry Text="" x:Name="txtSongArtist"/>
-        </VerticalStackLayout>
-        <Button Text="Add Image Here" WidthRequest="190" Command="{Binding AddImage}"/>
-        <Button Text="Add Song" WidthRequest="150" Clicked="AddNewSongToArtist"/>
-            <Label Text="" x:Name="fullpath"/>
-            <Label Text="" x:Name="filename"/>
-        </VerticalStackLayout>
-    </ScrollView>
+            <Border Grid.Row="0" Grid.Column="1" Stroke="Black">
+                <Image Aspect="AspectFill" Source="{Binding ToBeAdded.AlbumCover}"/>
+            </Border>
+            <ScrollView Grid.Row="1" Grid.ColumnSpan="4" Orientation="{Binding ScrollDisabler}">
+            <Grid BackgroundColor="Transparent" RowDefinitions="60,60,60,60,60,60,60" ColumnDefinitions="300,300,300">
+                <HorizontalStackLayout Grid.Row="0" Grid.Column="0">
+                    <Label Text="Title" VerticalTextAlignment="Center"/>
+                    <Entry Text="{Binding Song1.SongName}"/>
+                </HorizontalStackLayout>
+                <HorizontalStackLayout Grid.Row="1" Grid.Column="0">
+                    <Label Text="Genre" VerticalTextAlignment="Center"/>
+                    <Entry Text="{Binding Song1.Genre}"/>
+                </HorizontalStackLayout>
+                    <HorizontalStackLayout Grid.Row="2" Grid.Column="0">
+                    <Label Text="Language" VerticalTextAlignment="Center"/>
+                    <Entry Text="{Binding Song1.Language}"/>
+                </HorizontalStackLayout>
+
+                <HorizontalStackLayout Grid.Row="0" Grid.Column="1" IsVisible="{Binding HideEntries}">
+                    <Label Text="Title" VerticalTextAlignment="Center"/>
+                    <Entry Text="{Binding Song2.SongName}"/>
+                </HorizontalStackLayout>
+                <HorizontalStackLayout Grid.Row="1" Grid.Column="1" IsVisible="{Binding HideEntries}">
+                    <Label Text="Genre" VerticalTextAlignment="Center"/>
+                    <Entry Text="{Binding Song2.Genre}"/>
+                </HorizontalStackLayout>
+                    <HorizontalStackLayout Grid.Row="2" Grid.Column="1" IsVisible="{Binding HideEntries}">
+                    <Label Text="Language" VerticalTextAlignment="Center"/>
+                    <Entry Text="{Binding Song2.Language}"/>
+                </HorizontalStackLayout>
+
+                <HorizontalStackLayout Grid.Row="0" Grid.Column="2" IsVisible="{Binding HideEntries}">
+                    <Label Text="Title" VerticalTextAlignment="Center"/>
+                    <Entry Text="{Binding Song3.SongName}"/>
+                </HorizontalStackLayout>
+                <HorizontalStackLayout Grid.Row="1" Grid.Column="2" IsVisible="{Binding HideEntries}">
+                    <Label Text="Genre" VerticalTextAlignment="Center"/>
+                    <Entry Text="{Binding Song3.Genre}"/>
+                </HorizontalStackLayout>
+                <HorizontalStackLayout Grid.Row="2" Grid.Column="2" IsVisible="{Binding HideEntries}">
+                    <Label Text="Language" VerticalTextAlignment="Center"/>
+                    <Entry Text="{Binding Song3.Language}"/>
+                </HorizontalStackLayout>
+
+                <HorizontalStackLayout Grid.Row="4" Grid.Column="0" IsVisible="{Binding HideEntries}">
+                      <Label Text="Title" VerticalTextAlignment="Center"/>
+                      <Entry Text="{Binding Song4.SongName}"/>
+                 </HorizontalStackLayout>
+                 <HorizontalStackLayout Grid.Row="5" Grid.Column="0" IsVisible="{Binding HideEntries}">
+                        <Label Text="Genre" VerticalTextAlignment="Center"/>
+                        <Entry Text="{Binding Song4.Genre}"/>
+                 </HorizontalStackLayout>
+                <HorizontalStackLayout Grid.Row="6" Grid.Column="0" IsVisible="{Binding HideEntries}">
+                    <Label Text="Language" VerticalTextAlignment="Center"/>
+                    <Entry Text="{Binding Song4.Language}"/>
+                </HorizontalStackLayout>
+
+                    <HorizontalStackLayout Grid.Row="4" Grid.Column="1" IsVisible="{Binding HideEntries}">
+                        <Label Text="Title" VerticalTextAlignment="Center"/>
+                        <Entry Text="{Binding Song5.SongName}"/>
+                    </HorizontalStackLayout>
+                    <HorizontalStackLayout Grid.Row="5" Grid.Column="1" IsVisible="{Binding HideEntries}">
+                        <Label Text="Genre" VerticalTextAlignment="Center"/>
+                        <Entry Text="{Binding Song5.Genre}"/>
+                    </HorizontalStackLayout>
+                    <HorizontalStackLayout Grid.Row="6" Grid.Column="1" IsVisible="{Binding HideEntries}">
+                        <Label Text="Language" VerticalTextAlignment="Center"/>
+                        <Entry Text="{Binding Song5.Language}"/>
+                    </HorizontalStackLayout>
+
+                </Grid>
+            </ScrollView>
+        </Grid>
+    </Grid>
 </ContentPage>
